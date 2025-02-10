@@ -1,0 +1,216 @@
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 64px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.logo p {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: #121417;
+}
+.logo::before {
+  content: "🇺🇦";
+  font-size: 24px;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.routes {
+  display: flex;
+  gap: 28px;
+}
+.routes a {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 125%;
+  color: #121417;
+  text-decoration: none;
+}
+.navLinks a {
+  text-decoration: none;
+  color: #121417;
+  font-weight: 400;
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.loginButton {
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 125%;
+
+  height: 20px;
+
+  transition: text-decoration 0.3s ease;
+}
+.loginButton:hover {
+  text-decoration: underline;
+}
+.loginIcon {
+  width: 20px;
+  height: 20px;
+}
+.registrationButton {
+  background-color: var(--main);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 125%;
+  color: #fff;
+  border-radius: 12px;
+
+  width: 166px;
+  height: 48px;
+  transition: background-color 0.3s ease;
+}
+.registrationButton:hover {
+  background-color: #555656;
+}
+.contentWrapper {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 96px;
+}
+
+.textSection {
+  width: 820px;
+  padding-right: 80px;
+  padding-top: 98px;
+  padding-left: 64px;
+  border-radius: 30px;
+  height: 530px;
+  background: #f8f8f8;
+  flex: 1;
+}
+
+.mainHeading {
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 117%;
+  letter-spacing: -0.02em;
+  color: var(--main);
+  margin-bottom: 32px;
+}
+
+.highlightText {
+  background-size: auto;
+  color: var(--main);
+  background-color: #fbe9ba;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.subheading {
+  max-width: 471px;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 137%;
+  letter-spacing: -0.02em;
+  color: var(--main);
+  margin-bottom: 64px;
+}
+
+.ctaButton {
+  border-radius: 12px;
+  padding: 16px 88px;
+
+  height: 60px;
+  cursor: pointer;
+  background: #f4c550;
+  border: none;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  margin-bottom: 32px;
+  transition: background-color 0.3s ease;
+}
+
+.ctaButton:hover {
+  background-color: #ffdc86;
+}
+
+.statsContainer {
+  display: flex;
+  gap: 32px;
+  border: 7px dashed #f4c550;
+  border-radius: 30px;
+  padding: 40px 122px;
+  justify-content: space-around;
+}
+
+.statItem {
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 16px;
+}
+
+.statItem h3 {
+  font-size: 28px;
+  font-weight: 500;
+  color: #121417;
+  margin-bottom: 8px;
+}
+
+.statItem p {
+  font-size: 19px;
+  line-height: 129%;
+  letter-spacing: -0.02em;
+  color: rgba(18, 20, 23, 0.7);
+}
+
+.imageSection {
+  flex: 1;
+  background-color: #fbe9ba;
+  border-radius: 30px;
+  height: 530px;
+  position: relative; /* Позволяет позиционировать дочерние элементы */
+  overflow: hidden;
+}
+
+.face {
+  position: absolute;
+  top: 80px; /* Меняй координаты, как нужно */
+  left: 100px;
+}
+
+.iMac {
+  position: absolute;
+  bottom: 1px; /* Размещаем iMac ближе к низу */
+  left: 100px;
+}
