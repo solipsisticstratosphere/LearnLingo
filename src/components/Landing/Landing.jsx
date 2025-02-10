@@ -1,6 +1,12 @@
+import { useState } from "react";
 import styles from "./Landing.module.css";
+import LoginPopup from "../LoginRegisterPopUps/LoginPopup";
+import RegistrationPopup from "../LoginRegisterPopUps/RegistrationPopup";
 
 const Landing = () => {
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
+
   return (
     <div className={styles.container}>
       <nav className={styles.navbar}>
@@ -15,7 +21,10 @@ const Landing = () => {
 
         <div className={styles.navLinks}>
           <div className={styles.authButtons}>
-            <button className={styles.loginButton}>
+            <button
+              className={styles.loginButton}
+              onClick={() => setShowLoginPopup(true)}
+            >
               <img
                 src="/src/assets/icons/log-in-01.svg"
                 alt="Log In"
@@ -23,7 +32,12 @@ const Landing = () => {
               />
               Log in
             </button>
-            <button className={styles.registrationButton}>Registration</button>
+            <button
+              className={styles.registrationButton}
+              onClick={() => setShowRegistrationPopup(true)}
+            >
+              Registration
+            </button>
           </div>
         </div>
       </nav>
@@ -69,6 +83,13 @@ const Landing = () => {
           <p>Tutor nationalities</p>
         </div>
       </div>
+      {showLoginPopup && (
+        <LoginPopup onClose={() => setShowLoginPopup(false)} />
+      )}
+
+      {showRegistrationPopup && (
+        <RegistrationPopup onClose={() => setShowRegistrationPopup(false)} />
+      )}
     </div>
   );
 };
