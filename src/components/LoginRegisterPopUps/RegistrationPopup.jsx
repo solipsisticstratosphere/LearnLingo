@@ -2,7 +2,10 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styles from "./LoginRegistration.module.css";
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectError, selectIsLoading } from "../../redux/auth/selectors";
+import { register as registerUser } from "../../redux/auth/operations";
 const registrationSchema = yup.object().shape({
   name: yup
     .string()
@@ -19,50 +22,106 @@ const registrationSchema = yup.object().shape({
 });
 
 const RegistrationPopup = ({ onClose }) => {
+  const dispatch = useDispatch();
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError: setFormError,
   } = useForm({
     resolver: yupResolver(registrationSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Registration submitted", data);
-    // Add your registration logic here
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(registerUser(data)).unwrap();
+      onClose();
+    } catch (error) {
+      setFormError("email", {
+        type: "manual",
+        message: error.message,
+      });
+    }
+  };
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscKey);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscKey);
+    };
+  }, [onClose]);
+
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
   };
 
   return (
-    <div className={styles.popupOverlay}>
+    <div className={styles.popupOverlay} onClick={handleBackdropClick}>
       <div className={styles.popupContent}>
         <button className={styles.closeButton} onClick={onClose}>
-          ×
+          <img src="/src/assets/icons/x.svg" alt="Close" />
         </button>
         <h2>Registration</h2>
+        <p>
+          Thank you for your interest in our platform! In order to register, we
+          need some information. Please provide us with the following
+          information
+        </p>
+        {error && <p className={styles.errorMessage}>{error}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formGroup}>
-            <label htmlFor="name">Name</label>
-            <input {...register("name")} type="text" id="name" />
+            <label htmlFor="name"></label>
+            <input
+              {...register("name")}
+              type="text"
+              id="name"
+              placeholder="Name"
+            />
             {errors.name && (
               <p className={styles.errorMessage}>{errors.name.message}</p>
             )}
           </div>
           <div className={styles.formGroup}>
             <label htmlFor="email"></label>
-            <input {...register("email")} type="email" id="email" />
+            <input
+              {...register("email")}
+              type="email"
+              id="email"
+              placeholder="Email"
+            />
             {errors.email && (
               <p className={styles.errorMessage}>{errors.email.message}</p>
             )}
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="password">Password</label>
-            <input {...register("password")} type="password" id="password" />
+            <label htmlFor="password"></label>
+            <input
+              {...register("password")}
+              type="password"
+              id="password"
+              placeholder="Password"
+            />
             {errors.password && (
               <p className={styles.errorMessage}>{errors.password.message}</p>
             )}
           </div>
-          <button type="submit" className={styles.submitButton}>
-            Sign Up
+          <button
+            type="submit"
+            className={styles.submitButton}
+            disabled={isLoading}
+          >
+            {isLoading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
       </div>

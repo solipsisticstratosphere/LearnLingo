@@ -2,46 +2,11 @@ import { useState } from "react";
 import styles from "./Landing.module.css";
 import LoginPopup from "../LoginRegisterPopUps/LoginPopup";
 import RegistrationPopup from "../LoginRegisterPopUps/RegistrationPopup";
+import Layout from "../Layout/Layout";
 
 const Landing = () => {
-  const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [showRegistrationPopup, setShowRegistrationPopup] = useState(false);
-
   return (
     <div className={styles.container}>
-      <nav className={styles.navbar}>
-        <div className={styles.logo}>
-          <img src="/src/assets/icons/ukraine.svg" alt="LearnLingo" />
-          <p>LearnLingo</p>
-        </div>
-        <div className={styles.routes}>
-          <a href="#home">Home</a>
-          <a href="#teachers">Teachers</a>
-        </div>
-
-        <div className={styles.navLinks}>
-          <div className={styles.authButtons}>
-            <button
-              className={styles.loginButton}
-              onClick={() => setShowLoginPopup(true)}
-            >
-              <img
-                src="/src/assets/icons/log-in-01.svg"
-                alt="Log In"
-                className={styles.loginIcon}
-              />
-              Log in
-            </button>
-            <button
-              className={styles.registrationButton}
-              onClick={() => setShowRegistrationPopup(true)}
-            >
-              Registration
-            </button>
-          </div>
-        </div>
-      </nav>
-
       <div className={styles.contentWrapper}>
         <div className={styles.textSection}>
           <h1 className={styles.mainHeading}>
@@ -83,13 +48,6 @@ const Landing = () => {
           <p>Tutor nationalities</p>
         </div>
       </div>
-      {showLoginPopup && (
-        <LoginPopup onClose={() => setShowLoginPopup(false)} />
-      )}
-
-      {showRegistrationPopup && (
-        <RegistrationPopup onClose={() => setShowRegistrationPopup(false)} />
-      )}
     </div>
   );
 };
