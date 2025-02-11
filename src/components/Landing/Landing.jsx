@@ -3,7 +3,8 @@ import styles from "./Landing.module.css";
 import LoginPopup from "../LoginRegisterPopUps/LoginPopup";
 import RegistrationPopup from "../LoginRegisterPopUps/RegistrationPopup";
 import Layout from "../Layout/Layout";
-
+import face from "../../assets/face.png";
+import iMac from "../../assets/iMac.png";
 const Landing = () => {
   return (
     <div className={styles.container}>
@@ -26,8 +27,8 @@ const Landing = () => {
         </div>
 
         <div className={styles.imageSection}>
-          <img src="../../assets/face.png" alt="" className={styles.face} />
-          <img src="../../assets/iMac.png" alt="" className={styles.iMac} />
+          <img src={face} alt="" className={styles.face} />
+          <img src={iMac} alt="" className={styles.iMac} />
         </div>
       </div>
       <div className={styles.statsContainer}>
