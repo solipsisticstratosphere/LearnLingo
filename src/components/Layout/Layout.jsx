@@ -5,7 +5,8 @@ import RegistrationPopup from "../LoginRegisterPopUps/RegistrationPopup";
 import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
 import { logout } from "../../redux/auth/operations";
 import styles from "../Landing/Landing.module.css";
-
+import ukraine from "../../assets/icons/ukraine.svg";
+import login from "../../assets/icons/log-in-01.svg";
 const Layout = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -21,7 +22,7 @@ const Layout = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <img src="/src/assets/icons/ukraine.svg" alt="LearnLingo" />
+        <img src={ukraine} alt="LearnLingo" />
         <p>LearnLingo</p>
       </div>
 
@@ -45,11 +46,7 @@ const Layout = () => {
                 className={styles.loginButton}
                 onClick={() => setShowLoginPopup(true)}
               >
-                <img
-                  src="/src/assets/icons/log-in-01.svg"
-                  alt="Log In"
-                  className={styles.loginIcon}
-                />
+                <img src={login} alt="Log In" className={styles.loginIcon} />
                 Log in
               </button>
               <button

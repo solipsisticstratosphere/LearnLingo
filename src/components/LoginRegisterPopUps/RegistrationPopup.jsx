@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectError, selectIsLoading } from "../../redux/auth/selectors";
 import { register as registerUser } from "../../redux/auth/operations";
+import x from "../../assets/icons/x.svg";
+
 const registrationSchema = yup.object().shape({
   name: yup
     .string()
@@ -70,7 +72,7 @@ const RegistrationPopup = ({ onClose }) => {
     <div className={styles.popupOverlay} onClick={handleBackdropClick}>
       <div className={styles.popupContent}>
         <button className={styles.closeButton} onClick={onClose}>
-          <img src="/src/assets/icons/x.svg" alt="Close" />
+          <img src={x} alt="Close" />
         </button>
         <h2>Registration</h2>
         <p>

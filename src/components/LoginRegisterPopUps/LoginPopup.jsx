@@ -6,7 +6,7 @@ import styles from "./LoginRegistration.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { selectError, selectIsLoading } from "../../redux/auth/selectors";
 import { login } from "../../redux/auth/operations";
-
+import x from "../../assets/icons/x.svg";
 // Validation schema
 const loginSchema = yup.object().shape({
   email: yup
@@ -68,7 +68,7 @@ const LoginPopup = ({ onClose }) => {
     <div className={styles.popupOverlay} onClick={handleBackdropClick}>
       <div className={styles.popupContent}>
         <button className={styles.closeButton} onClick={onClose}>
-          <img src="/src/assets/icons/x.svg" alt="Close" />
+          <img src={x} alt="Close" />
         </button>
         <h2>Log In</h2>
         <p>
