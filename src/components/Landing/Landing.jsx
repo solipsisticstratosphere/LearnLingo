@@ -26,8 +26,8 @@ const Landing = () => {
         </div>
 
         <div className={styles.imageSection}>
-          <img src="/src/assets/face.png" alt="" className={styles.face} />
-          <img src="/src/assets/iMac.png" alt="" className={styles.iMac} />
+          <img src="../../assets/face.png" alt="" className={styles.face} />
+          <img src="../../assets/iMac.png" alt="" className={styles.iMac} />
         </div>
       </div>
       <div className={styles.statsContainer}>
