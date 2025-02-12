@@ -207,3 +207,17 @@
   bottom: 1px; /* Размещаем iMac ближе к низу */
   left: 100px;
 }
+.link {
+  text-decoration: none;
+  color: #121417;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #f4c550;
+}
+
+.activeLink {
+  color: #f4c550;
+}
