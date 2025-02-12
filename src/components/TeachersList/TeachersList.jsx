@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Heart, ChevronDown, ChevronUp } from "lucide-react";
-
+import dot from "../../assets/icons/dot.svg";
 import {
   selectDisplayedTeachers,
   selectError,
@@ -87,16 +87,36 @@ const TeachersList = () => {
                     e.target.onerror = null;
                   }}
                 />
+                <img src={dot} alt="" className={styles.dot} />
               </div>
 
               <div className={styles.infoContainer}>
                 <div className={styles.headerGroup}>
-                  <div>
+                  <div className={styles.teacherInfoContainer}>
                     <p className={styles.teacherInfo}>Languages</p>
                     <h3 className={styles.teacherName}>
                       {teacher.name} {teacher.surname}
                     </h3>
                   </div>
+                  <div className={styles.statsGrid}>
+                    {[
+                      { label: "Lessons ", value: "online" },
+                      { label: "Lessons done:", value: teacher.lessons_done },
+                      { label: "Rating:", value: teacher.rating },
+                      {
+                        label: "Price / 1 hour:",
+                        value: `${teacher.price_per_hour}$`,
+                      },
+                    ].map(({ label, value }) => (
+                      <div key={label} className={styles.statItem}>
+                        <span className={styles.statText}>
+                          {label}{" "}
+                          <span className={styles.statValue}>{value}</span>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
                   <button
                     onClick={() => handleFavoriteClick(teacher.firebaseId)}
                     className={styles.favoriteButton}
@@ -111,37 +131,27 @@ const TeachersList = () => {
                     />
                   </button>
                 </div>
-
-                <div className={styles.statsGrid}>
-                  {[
-                    { label: "Lessons online", value: "Online" },
-                    { label: "Lessons done", value: teacher.lessons_done },
-                    { label: "Rating", value: teacher.rating },
-                    {
-                      label: "Price / 1 hour",
-                      value: `${teacher.price_per_hour}$`,
-                    },
-                  ].map(({ label, value }) => (
-                    <div key={label} className={styles.statItem}>
-                      <span className={styles.statText}>
-                        {label}:{" "}
-                        <span className={styles.statValue}>{value}</span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <p className={styles.description}>{teacher.lesson_info}</p>
-
-                <div className={styles.levelsList}>
-                  {(teacher.levels || []).map((level) => (
-                    <span
-                      key={`${teacher.firebaseId}-${level}`}
-                      className={styles.levelBadge}
-                    >
-                      {level}
+                <div className={styles.descriptionContainer}>
+                  <div className={styles.languages}>
+                    <p className={styles.description}>Speaks: </p>
+                    <ul className={styles.languagesList}>
+                      <li className={styles.languagesItem}>
+                        {teacher.languages.join(", ")}
+                      </li>
+                    </ul>
+                  </div>
+                  <p className={styles.description}>
+                    Lesson info:{" "}
+                    <span className={styles.lessonInfo}>
+                      {teacher.lesson_info}
                     </span>
-                  ))}
+                  </p>
+                  <p className={styles.description}>
+                    Conditions:{" "}
+                    <span className={styles.lessonInfo}>
+                      {teacher.conditions}
+                    </span>
+                  </p>
                 </div>
 
                 {/* Basic card content */}
@@ -161,7 +171,18 @@ const TeachersList = () => {
                     )}
                   </button>
                 </div>
-
+                {!expandedCards[teacher.firebaseId] && (
+                  <div className={styles.levelsList}>
+                    {(teacher.levels || []).map((level) => (
+                      <span
+                        key={`${teacher.firebaseId}-${level}`}
+                        className={styles.levelBadge}
+                      >
+                        #{level}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {/* Expanded content */}
                 {expandedCards[teacher.firebaseId] && (
                   <div className={styles.expandedContent}>
@@ -202,6 +223,16 @@ const TeachersList = () => {
                           </div>
                         ))}
                       </div>
+                    </div>
+                    <div className={styles.levelsList}>
+                      {(teacher.levels || []).map((level) => (
+                        <span
+                          key={`${teacher.firebaseId}-${level}`}
+                          className={styles.levelBadge}
+                        >
+                          #{level}
+                        </span>
+                      ))}
                     </div>
                     <button
                       className={styles.bookButton}

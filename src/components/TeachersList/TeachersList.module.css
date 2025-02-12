@@ -1,3 +1,12 @@
+li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+ul {
+  list-style-type: none;
+}
 .container {
   max-width: 1024px;
   margin: 0 auto;
@@ -11,24 +20,36 @@
 }
 
 .card {
-  background-color: white;
-  border-radius: 1rem;
-  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 24px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .cardContent {
   display: flex;
-  gap: 1.5rem;
+  gap: 48px;
 }
 
 .avatarWrapper {
+  position: relative;
+  display: flex;
+  border: 3px solid #fbe9ba;
+  border-radius: 100px;
+  width: 120px;
+  height: 120px;
   flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
 }
-
+.dot {
+  position: absolute;
+  top: 13%;
+  right: 20%;
+}
 .avatar {
-  width: 5rem;
-  height: 5rem;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -41,26 +62,32 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 32px;
 }
 
 .teacherInfo {
-  color: #6b7280;
-  font-size: 0.875rem;
-  margin-bottom: 0.25rem;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #8a8a89;
 }
-
+.teacherInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .teacherName {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #111827;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  color: var(--main);
   margin: 0;
 }
 
 .favoriteButton {
   background: none;
   border: none;
-  padding: 0.5rem;
+
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -78,13 +105,12 @@
 }
 
 .favoriteIconActive {
-  color: #ef4444;
-  fill: #ef4444;
+  color: #f4c550;
+  fill: #f4c550;
 }
 
 .statsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
@@ -95,38 +121,70 @@
 }
 
 .statText {
-  font-size: 0.875rem;
-  color: #6b7280;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--main);
 }
 
 .statValue {
   color: #111827;
   font-weight: 500;
 }
-
-.description {
-  font-size: 0.875rem;
-  color: #4b5563;
-  margin-bottom: 1rem;
-  line-height: 1.5;
+.statItem:last-child .statValue {
+  color: #38cd3e;
 }
+.description {
+  font-size: 16px;
+  line-height: 150%;
+  color: #4b5563;
+  margin-bottom: 8px;
+}
+.languages {
+  display: flex;
+  align-items: baseline;
+}
+.languagesList {
+  margin-left: 0.2rem;
+  display: flex;
+}
+.languagesItem {
+  font-size: 16px;
+  line-height: 150%;
+  color: #121417;
+  margin-bottom: 0.5rem;
+  text-decoration: underline;
+  position: relative;
+}
+.lessonInfo {
+  font-weight: 500;
 
+  color: var(--main);
+}
 .levelsList {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+
+  margin-top: 32px;
 }
 
 .levelBadge {
-  background-color: #fef3c7;
-  color: #92400e;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(18, 20, 23, 0.2);
+  border-radius: 35px;
+  color: var(--main);
   font-weight: 500;
-}
 
+  font-size: 14px;
+  line-height: 114%;
+  height: 32px;
+  padding: 8px 12px;
+}
+.levelBadge:first-of-type {
+  background-color: #f4c550;
+}
 /* New styles for buttons */
 .buttonGroup {
   display: flex;
@@ -137,7 +195,7 @@
 .bookButton {
   background-color: #fcd34d;
   border-radius: 12px;
-
+  margin-top: 32px;
   width: 232px;
   height: 60px;
   border: none;
@@ -158,6 +216,7 @@
   cursor: pointer;
   padding: 0.5rem 1rem;
   transition: color 0.2s ease;
+  padding-left: 0;
 }
 
 .readMoreButton:hover {
@@ -208,13 +267,6 @@
   margin-bottom: 0.5rem;
   padding-left: 1.5rem;
   position: relative;
-}
-
-.conditionItem::before {
-  content: "•";
-  position: absolute;
-  left: 0.5rem;
-  color: #9ca3af;
 }
 
 .reviewsSection {
