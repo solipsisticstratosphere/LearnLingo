@@ -147,14 +147,6 @@ const TeachersList = () => {
                 {/* Basic card content */}
                 <div className={styles.buttonGroup}>
                   <button
-                    className={styles.bookButton}
-                    onClick={() =>
-                      console.log(`Booking trial lesson with ${teacher.name}`)
-                    }
-                  >
-                    Book trial lesson
-                  </button>
-                  <button
                     className={styles.readMoreButton}
                     onClick={() => toggleExpand(teacher.firebaseId)}
                   >
@@ -211,6 +203,14 @@ const TeachersList = () => {
                         ))}
                       </div>
                     </div>
+                    <button
+                      className={styles.bookButton}
+                      onClick={() =>
+                        console.log(`Booking trial lesson with ${teacher.name}`)
+                      }
+                    >
+                      Book trial lesson
+                    </button>
                   </div>
                 )}
               </div>
