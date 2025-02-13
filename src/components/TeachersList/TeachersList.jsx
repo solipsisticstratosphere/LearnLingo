@@ -86,7 +86,9 @@ const TeachersList = () => {
             <option value="German">German</option>
             <option value="Spanish">Spanish</option>
             <option value="Italian">Italian</option>
-            <option value="Chinese">Chinese</option>
+            <option value="Mandarin Chinese">Chinese</option>
+            <option value="Korean">Korean</option>
+            <option value="Vietnamese">Vietnamese</option>
           </select>
         </div>
 
