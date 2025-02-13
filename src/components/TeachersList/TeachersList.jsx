@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Heart, ChevronDown, ChevronUp } from "lucide-react";
 import dot from "../../assets/icons/dot.svg";
+import rating from "../../assets/icons/Rating.svg";
+import book from "../../assets/icons/book.svg";
 import {
   selectDisplayedTeachers,
   selectError,
@@ -9,8 +11,9 @@ import {
   selectIsLoading,
 } from "../../redux/teachers/selectors";
 import { fetchTeachers } from "../../redux/teachers/operations";
-import { loadMoreTeachers } from "../../redux/teachers/slice";
+import { loadMoreTeachers, setFilters } from "../../redux/teachers/slice";
 import styles from "./TeachersList.module.css";
+import BookTrialPopUp from "../BookTrialPopUp/BookTrialPopUp";
 
 const TeachersList = () => {
   const dispatch = useDispatch();
@@ -19,7 +22,8 @@ const TeachersList = () => {
   const error = useSelector(selectError);
   const hasMore = useSelector(selectHasMore);
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [showAuthAlert, setShowAuthAlert] = useState(false);
   const [expandedCards, setExpandedCards] = useState({});
@@ -64,9 +68,59 @@ const TeachersList = () => {
   const handleLoadMore = () => {
     dispatch(loadMoreTeachers());
   };
-
+  const handleFilterChange = (filterType, value) => {
+    dispatch(setFilters({ [filterType]: value }));
+  };
   return (
     <div className={styles.container}>
+      <div className={styles.filtersContainer}>
+        <div className={styles.filterGroup}>
+          <label className={styles.filterLabel}>Languages</label>
+          <select
+            onChange={(e) => handleFilterChange("language", e.target.value)}
+            className={styles.filterSelect}
+          >
+            <option value="">All Languages</option>
+            <option value="French">French</option>
+            <option value="English">English</option>
+            <option value="German">German</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Italian">Italian</option>
+            <option value="Chinese">Chinese</option>
+          </select>
+        </div>
+
+        <div className={styles.filterGroup}>
+          <label className={styles.filterLabel}>Level of knowledge</label>
+          <select
+            onChange={(e) => handleFilterChange("level", e.target.value)}
+            className={styles.filterSelect}
+          >
+            <option value="">All Levels</option>
+            <option value="A1 Beginner">A1 Beginner</option>
+            <option value="A2 Elementary">A2 Elementary</option>
+            <option value="B1 Intermediate">B1 Intermediate</option>
+            <option value="B2 Upper-Intermediate">B2 Upper-Intermediate</option>
+            <option value="C1 Advanced">C1 Advanced</option>
+            <option value="C2 Proficient">C2 Proficient</option>
+          </select>
+        </div>
+
+        <div className={styles.filterGroup}>
+          <label className={styles.filterLabel}>Price</label>
+          <select
+            onChange={(e) => handleFilterChange("pricePerHour", e.target.value)}
+            className={styles.filterSelect}
+          >
+            <option value="">All Prices</option>
+            <option value="25">Up to $25</option>
+            <option value="30">Up to $30</option>
+            <option value="40">Up to $40</option>
+            <option value="50">Up to $50</option>
+            <option value="100">Up to $100</option>
+          </select>
+        </div>
+      </div>
       {showAuthAlert && (
         <div className={styles.authAlert}>
           <p>Please log in to add teachers to favorites.</p>
@@ -98,18 +152,33 @@ const TeachersList = () => {
                       {teacher.name} {teacher.surname}
                     </h3>
                   </div>
+
                   <div className={styles.statsGrid}>
                     {[
-                      { label: "Lessons ", value: "online" },
+                      { label: "Lessons ", value: "online", isBook: true },
                       { label: "Lessons done:", value: teacher.lessons_done },
-                      { label: "Rating:", value: teacher.rating },
+                      {
+                        label: "Rating:",
+                        value: teacher.rating,
+                        isRating: true,
+                      },
                       {
                         label: "Price / 1 hour:",
                         value: `${teacher.price_per_hour}$`,
                       },
-                    ].map(({ label, value }) => (
+                    ].map(({ label, value, isRating, isBook }) => (
                       <div key={label} className={styles.statItem}>
                         <span className={styles.statText}>
+                          {isRating ? (
+                            <img
+                              src={rating}
+                              alt="Rating"
+                              className={styles.ratingImage}
+                            />
+                          ) : null}
+                          {isBook ? (
+                            <img src={book} alt="" className={styles.book} />
+                          ) : null}
                           {label}{" "}
                           <span className={styles.statValue}>{value}</span>
                         </span>
@@ -154,7 +223,6 @@ const TeachersList = () => {
                   </p>
                 </div>
 
-                {/* Basic card content */}
                 <div className={styles.buttonGroup}>
                   <button
                     className={styles.readMoreButton}
@@ -183,29 +251,17 @@ const TeachersList = () => {
                     ))}
                   </div>
                 )}
-                {/* Expanded content */}
+
                 {expandedCards[teacher.firebaseId] && (
                   <div className={styles.expandedContent}>
                     <div className={styles.experienceSection}>
-                      <h4 className={styles.sectionTitle}>Experience</h4>
+                      {/* <h4 className={styles.sectionTitle}>Experience</h4> */}
                       <p className={styles.experienceText}>
                         {teacher.experience}
                       </p>
                     </div>
 
-                    <div className={styles.conditionsSection}>
-                      <h4 className={styles.sectionTitle}>Conditions</h4>
-                      <ul className={styles.conditionsList}>
-                        {teacher.conditions.map((condition, index) => (
-                          <li key={index} className={styles.conditionItem}>
-                            {condition}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
                     <div className={styles.reviewsSection}>
-                      <h4 className={styles.sectionTitle}>Reviews</h4>
                       <div className={styles.reviewsList}>
                         {teacher.reviews.map((review, index) => (
                           <div key={index} className={styles.reviewItem}>
@@ -214,7 +270,8 @@ const TeachersList = () => {
                                 {review.reviewer_name}
                               </span>
                               <span className={styles.reviewRating}>
-                                Rating: {review.reviewer_rating}
+                                <img src={rating} alt="Rating" />{" "}
+                                {review.reviewer_rating}.0
                               </span>
                             </div>
                             <p className={styles.reviewComment}>
@@ -236,9 +293,10 @@ const TeachersList = () => {
                     </div>
                     <button
                       className={styles.bookButton}
-                      onClick={() =>
-                        console.log(`Booking trial lesson with ${teacher.name}`)
-                      }
+                      onClick={() => {
+                        setSelectedTeacher(teacher);
+                        setIsModalOpen(true);
+                      }}
                     >
                       Book trial lesson
                     </button>
@@ -249,7 +307,16 @@ const TeachersList = () => {
           </div>
         ))}
       </div>
-
+      <BookTrialPopUp
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        teacherName={
+          selectedTeacher
+            ? `${selectedTeacher.name} ${selectedTeacher.surname}`
+            : ""
+        }
+        teacherAvatar={selectedTeacher?.avatar_url}
+      />
       {isLoading && (
         <div className={styles.loadingStatus} role="status">
           Loading...

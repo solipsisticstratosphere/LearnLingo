@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectError, selectIsLoading } from "../../redux/auth/selectors";
 import { login } from "../../redux/auth/operations";
 import x from "../../assets/icons/x.svg";
-// Validation schema
+
 const loginSchema = yup.object().shape({
   email: yup
     .string()

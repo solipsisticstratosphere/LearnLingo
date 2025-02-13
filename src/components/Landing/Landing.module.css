@@ -192,19 +192,19 @@
   background-color: #fbe9ba;
   border-radius: 30px;
   height: 530px;
-  position: relative; /* Позволяет позиционировать дочерние элементы */
+  position: relative;
   overflow: hidden;
 }
 
 .face {
   position: absolute;
-  top: 80px; /* Меняй координаты, как нужно */
+  top: 80px;
   left: 100px;
 }
 
 .iMac {
   position: absolute;
-  bottom: 1px; /* Размещаем iMac ближе к низу */
+  bottom: 1px;
   left: 100px;
 }
 .link {

@@ -9,7 +9,9 @@ import {
 } from "../../redux/teachers/selectors";
 import { fetchTeachers } from "../../redux/teachers/operations";
 import styles from "../TeachersList/TeachersList.module.css";
-
+import dot from "../../assets/icons/dot.svg";
+import rating from "../../assets/icons/Rating.svg";
+import BookTrialPopUp from "../BookTrialPopUp/BookTrialPopUp";
 const Favorites = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,11 +19,11 @@ const Favorites = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [expandedCards, setExpandedCards] = useState({});
 
-  // Redirect if not authenticated
   if (!isAuthenticated) {
     return <Navigate to="/teachers" replace />;
   }
@@ -52,7 +54,6 @@ const Favorites = () => {
     }));
   };
 
-  // Filter teachers to show only favorites
   const favoriteTeachers = allTeachers.filter((teacher) =>
     favorites.includes(teacher.firebaseId)
   );
@@ -80,57 +81,83 @@ const Favorites = () => {
                     e.target.onerror = null;
                   }}
                 />
+                <img src={dot} alt="" className={styles.dot} />
               </div>
 
               <div className={styles.infoContainer}>
                 <div className={styles.headerGroup}>
-                  <div>
+                  <div className={styles.teacherInfoContainer}>
                     <p className={styles.teacherInfo}>Languages</p>
                     <h3 className={styles.teacherName}>
                       {teacher.name} {teacher.surname}
                     </h3>
                   </div>
+                  <div className={styles.statsGrid}>
+                    {[
+                      { label: "Lessons ", value: "online" },
+                      { label: "Lessons done:", value: teacher.lessons_done },
+                      {
+                        label: "Rating:",
+                        value: teacher.rating,
+                        isRating: true,
+                      },
+                      {
+                        label: "Price / 1 hour:",
+                        value: `${teacher.price_per_hour}$`,
+                      },
+                    ].map(({ label, value, isRating }) => (
+                      <div key={label} className={styles.statItem}>
+                        <span className={styles.statText}>
+                          {isRating ? (
+                            <img
+                              src={rating}
+                              alt="Rating"
+                              className={styles.ratingImage}
+                            />
+                          ) : null}
+                          {label}{" "}
+                          <span className={styles.statValue}>{value}</span>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
                   <button
                     onClick={() => handleFavoriteClick(teacher.firebaseId)}
                     className={styles.favoriteButton}
-                    aria-label="Remove from favorites"
+                    aria-label="Add to favorites"
                   >
                     <Heart
-                      className={`${styles.favoriteIcon} ${styles.favoriteIconActive}`}
+                      className={`${styles.favoriteIcon} ${
+                        favorites.includes(teacher.firebaseId)
+                          ? styles.favoriteIconActive
+                          : styles.favoriteIconInactive
+                      }`}
                     />
                   </button>
                 </div>
 
-                <div className={styles.statsGrid}>
-                  {[
-                    { label: "Lessons online", value: "Online" },
-                    { label: "Lessons done", value: teacher.lessons_done },
-                    { label: "Rating", value: teacher.rating },
-                    {
-                      label: "Price / 1 hour",
-                      value: `${teacher.price_per_hour}$`,
-                    },
-                  ].map(({ label, value }) => (
-                    <div key={label} className={styles.statItem}>
-                      <span className={styles.statText}>
-                        {label}:{" "}
-                        <span className={styles.statValue}>{value}</span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <p className={styles.description}>{teacher.lesson_info}</p>
-
-                <div className={styles.levelsList}>
-                  {(teacher.levels || []).map((level) => (
-                    <span
-                      key={`${teacher.firebaseId}-${level}`}
-                      className={styles.levelBadge}
-                    >
-                      {level}
+                <div className={styles.descriptionContainer}>
+                  <div className={styles.languages}>
+                    <p className={styles.description}>Speaks: </p>
+                    <ul className={styles.languagesList}>
+                      <li className={styles.languagesItem}>
+                        {teacher.languages.join(", ")}
+                      </li>
+                    </ul>
+                  </div>
+                  <p className={styles.description}>
+                    Lesson info:{" "}
+                    <span className={styles.lessonInfo}>
+                      {teacher.lesson_info}
                     </span>
-                  ))}
+                  </p>
+                  <p className={styles.description}>
+                    Conditions:{" "}
+                    <span className={styles.lessonInfo}>
+                      {teacher.conditions}
+                    </span>
+                  </p>
                 </div>
 
                 <div className={styles.buttonGroup}>
@@ -149,29 +176,28 @@ const Favorites = () => {
                     )}
                   </button>
                 </div>
-
+                {!expandedCards[teacher.firebaseId] && (
+                  <div className={styles.levelsList}>
+                    {(teacher.levels || []).map((level) => (
+                      <span
+                        key={`${teacher.firebaseId}-${level}`}
+                        className={styles.levelBadge}
+                      >
+                        #{level}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {expandedCards[teacher.firebaseId] && (
                   <div className={styles.expandedContent}>
                     <div className={styles.experienceSection}>
-                      <h4 className={styles.sectionTitle}>Experience</h4>
+                      {/* <h4 className={styles.sectionTitle}>Experience</h4> */}
                       <p className={styles.experienceText}>
                         {teacher.experience}
                       </p>
                     </div>
 
-                    <div className={styles.conditionsSection}>
-                      <h4 className={styles.sectionTitle}>Conditions</h4>
-                      <ul className={styles.conditionsList}>
-                        {teacher.conditions.map((condition, index) => (
-                          <li key={index} className={styles.conditionItem}>
-                            {condition}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
                     <div className={styles.reviewsSection}>
-                      <h4 className={styles.sectionTitle}>Reviews</h4>
                       <div className={styles.reviewsList}>
                         {teacher.reviews.map((review, index) => (
                           <div key={index} className={styles.reviewItem}>
@@ -180,7 +206,8 @@ const Favorites = () => {
                                 {review.reviewer_name}
                               </span>
                               <span className={styles.reviewRating}>
-                                Rating: {review.reviewer_rating}
+                                <img src={rating} alt="Rating" />{" "}
+                                {review.reviewer_rating}.0
                               </span>
                             </div>
                             <p className={styles.reviewComment}>
@@ -190,11 +217,22 @@ const Favorites = () => {
                         ))}
                       </div>
                     </div>
+                    <div className={styles.levelsList}>
+                      {(teacher.levels || []).map((level) => (
+                        <span
+                          key={`${teacher.firebaseId}-${level}`}
+                          className={styles.levelBadge}
+                        >
+                          #{level}
+                        </span>
+                      ))}
+                    </div>
                     <button
                       className={styles.bookButton}
-                      onClick={() =>
-                        console.log(`Booking trial lesson with ${teacher.name}`)
-                      }
+                      onClick={() => {
+                        setSelectedTeacher(teacher);
+                        setIsModalOpen(true);
+                      }}
                     >
                       Book trial lesson
                     </button>
@@ -205,6 +243,16 @@ const Favorites = () => {
           </div>
         ))}
       </div>
+      <BookTrialPopUp
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        teacherName={
+          selectedTeacher
+            ? `${selectedTeacher.name} ${selectedTeacher.surname}`
+            : ""
+        }
+        teacherAvatar={selectedTeacher?.avatar_url}
+      />
 
       {isLoading && (
         <div className={styles.loadingStatus} role="status">

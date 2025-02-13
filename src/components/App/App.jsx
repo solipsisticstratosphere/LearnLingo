@@ -1,4 +1,3 @@
-// App.jsx
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import styles from "./App.module.css";
@@ -17,7 +16,6 @@ function App() {
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    console.log("Refreshing user...");
     dispatch(refreshUser());
   }, [dispatch]);
 

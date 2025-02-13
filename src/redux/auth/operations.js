@@ -69,7 +69,7 @@ export const refreshUser = createAsyncThunk(
     try {
       return new Promise((resolve, reject) => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
-          unsubscribe(); // Unsubscribe immediately after getting the user
+          unsubscribe();
 
           if (user) {
             resolve({

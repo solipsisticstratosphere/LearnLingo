@@ -21,7 +21,6 @@ export const fetchTeachers = createAsyncThunk(
         return [];
       }
 
-      // Преобразуем объект в массив с ID
       const allTeachers = Object.entries(data).map(
         ([firebaseId, teacherData]) => ({
           firebaseId,

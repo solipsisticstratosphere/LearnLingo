@@ -4,7 +4,7 @@ import styles from "./Loader.module.css";
 const Loader = () => {
   return (
     <div className={styles.loaderContainer}>
-      <PuffLoader color="#ff5733" size={60} />
+      <PuffLoader color="#ff5733" size={160} />
     </div>
   );
 };
