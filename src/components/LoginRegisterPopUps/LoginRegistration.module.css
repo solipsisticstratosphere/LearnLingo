@@ -63,6 +63,31 @@ h2 + p {
 .formGroup input::placeholder {
   color: var(--main);
 }
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.eyeIcon:hover {
+  color: #333;
+}
+.passwordInput {
+  padding-right: 40px;
+}
+.inputGroup {
+  position: relative;
+  width: 100%;
+}
 .submitButton {
   width: 100%;
   padding-top: 16px;

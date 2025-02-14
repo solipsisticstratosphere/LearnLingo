@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styles from "./LoginRegistration.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectError, selectIsLoading } from "../../redux/auth/selectors";
 import { register as registerUser } from "../../redux/auth/operations";
 import x from "../../assets/icons/x.svg";
+import { Eye, EyeOff } from "lucide-react";
 
 const registrationSchema = yup.object().shape({
   name: yup
@@ -22,7 +23,32 @@ const registrationSchema = yup.object().shape({
     .required("Password is required")
     .min(6, "Password must be at least 6 characters"),
 });
+const PasswordInput = ({ field, error, ...props }) => {
+  const [isVisible, setIsVisible] = useState(false);
 
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
+
+  return (
+    <div className={styles.inputGroup}>
+      <input
+        {...field}
+        {...props}
+        type={isVisible ? "text" : "password"}
+        className={`${styles.input} ${styles.passwordInput}`}
+      />
+      <button
+        type="button"
+        className={styles.eyeIcon}
+        onClick={toggleVisibility}
+      >
+        {isVisible ? <Eye size={20} /> : <EyeOff size={20} />}
+      </button>
+      {error && <p className={styles.errorMessage}>{error.message}</p>}
+    </div>
+  );
+};
 const RegistrationPopup = ({ onClose }) => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
@@ -108,11 +134,11 @@ const RegistrationPopup = ({ onClose }) => {
           </div>
           <div className={styles.formGroup}>
             <label htmlFor="password"></label>
-            <input
-              {...register("password")}
-              type="password"
+            <PasswordInput
+              field={register("password")}
               id="password"
               placeholder="Password"
+              error={errors.password}
             />
             {errors.password && (
               <p className={styles.errorMessage}>{errors.password.message}</p>

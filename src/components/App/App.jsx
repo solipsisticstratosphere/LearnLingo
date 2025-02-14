@@ -10,6 +10,7 @@ import { refreshUser } from "../../redux/auth/operations";
 import Loader from "../Loader/Loader";
 import FavoritesPage from "../../pages/FavoritesPage/FavoritesPage";
 import PrivateRoute from "../Routes/PrivateRoute";
+import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
               />
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </div>

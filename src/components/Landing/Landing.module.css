@@ -1,6 +1,5 @@
 .navbar {
   padding-bottom: 20px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,6 +12,17 @@
   font-size: 20px;
   font-weight: 600;
 }
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.mobileMenu {
+  display: none;
+}
 .logo p {
   font-weight: 500;
   font-size: 20px;
@@ -20,20 +30,18 @@
   letter-spacing: -0.02em;
   color: #121417;
 }
-.logo::before {
-  content: "🇺🇦";
-  font-size: 24px;
-}
 
 .navLinks {
   display: flex;
   align-items: center;
   gap: 20px;
 }
+
 .routes {
   display: flex;
   gap: 28px;
 }
+
 .routes a {
   font-weight: 400;
   font-size: 18px;
@@ -41,6 +49,7 @@
   color: #121417;
   text-decoration: none;
 }
+
 .navLinks a {
   text-decoration: none;
   color: #121417;
@@ -59,22 +68,22 @@
   align-items: center;
   background: none;
   border: none;
-
   font-weight: 700;
   font-size: 16px;
   line-height: 125%;
-
   height: 20px;
-
   transition: text-decoration 0.3s ease;
 }
+
 .loginButton:hover {
   text-decoration: underline;
 }
+
 .loginIcon {
   width: 20px;
   height: 20px;
 }
+
 .registrationButton {
   background-color: var(--main);
   font-weight: 700;
@@ -82,14 +91,15 @@
   line-height: 125%;
   color: #fff;
   border-radius: 12px;
-
   width: 166px;
   height: 48px;
   transition: background-color 0.3s ease;
 }
+
 .registrationButton:hover {
   background-color: #555656;
 }
+
 .contentWrapper {
   display: flex;
   align-items: center;
@@ -138,15 +148,12 @@
 .ctaButton {
   border-radius: 12px;
   padding: 16px 88px;
-
   height: 60px;
   cursor: pointer;
   background: #f4c550;
   border: none;
-
   font-size: 18px;
   font-weight: 700;
-
   margin-bottom: 32px;
   transition: background-color 0.3s ease;
 }
@@ -169,7 +176,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-
   gap: 16px;
 }
 
@@ -207,10 +213,12 @@
   bottom: 1px;
   left: 100px;
 }
+
 .link {
   text-decoration: none;
   color: #121417;
   font-weight: 500;
+  position: relative;
   transition: color 0.3s ease;
 }
 
@@ -219,5 +227,199 @@
 }
 
 .activeLink {
+  text-decoration: none;
   color: #f4c550;
+  font-weight: 500;
+  position: relative;
+}
+
+.activeLink::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #f4c550;
+  transform: scaleX(1);
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 1400px) {
+  .textSection {
+    width: 50%;
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+
+  .face,
+  .iMac {
+    left: 50px;
+    width: 80%;
+    height: auto;
+  }
+}
+
+@media (max-width: 1200px) {
+  .statsContainer {
+    padding: 40px 60px;
+  }
+
+  .statItem {
+    height: auto;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 992px) {
+  .contentWrapper {
+    flex-direction: column;
+  }
+
+  .textSection {
+    width: 100%;
+    height: auto;
+    padding: 40px;
+  }
+
+  .imageSection {
+    width: 100%;
+    height: 400px;
+  }
+
+  .mainHeading {
+    font-size: 40px;
+  }
+
+  .face {
+    top: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 20px;
+  }
+
+  .routes {
+    display: none;
+  }
+
+  .statsContainer {
+    padding: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .statItem {
+    width: calc(50% - 16px);
+  }
+
+  .ctaButton {
+    width: 100%;
+    padding: 16px 20px;
+  }
+
+  .subheading {
+    margin-bottom: 32px;
+  }
+  .mobileMenuButton {
+    display: block;
+  }
+
+  .desktopMenu {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: block;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .mobileMenuContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mobileAuthButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .mobileAuthButtons .loginButton,
+  .mobileAuthButtons .registrationButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .navLinks {
+    gap: 10px;
+  }
+
+  .authButtons {
+    gap: 8px;
+  }
+
+  .registrationButton {
+    width: auto;
+    padding: 0 16px;
+  }
+
+  .mainHeading {
+    font-size: 32px;
+  }
+
+  .statsContainer {
+    padding: 20px;
+  }
+
+  .statItem {
+    width: 100%;
+  }
+
+  .statItem h3 {
+    font-size: 24px;
+  }
+
+  .statItem p {
+    font-size: 16px;
+  }
+
+  .imageSection {
+    height: 300px;
+  }
+}
+.logoLink {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.logo p {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: #121417;
 }

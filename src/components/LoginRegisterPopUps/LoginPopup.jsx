@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import styles from "./LoginRegistration.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { Eye, EyeOff } from "lucide-react";
 import { selectError, selectIsLoading } from "../../redux/auth/selectors";
 import { login } from "../../redux/auth/operations";
+import styles from "./LoginRegistration.module.css";
 import x from "../../assets/icons/x.svg";
 
 const loginSchema = yup.object().shape({
@@ -18,6 +19,33 @@ const loginSchema = yup.object().shape({
     .required("Password is required")
     .min(6, "Password must be at least 6 characters"),
 });
+
+const PasswordInput = ({ field, error, ...props }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
+
+  return (
+    <div className={styles.inputGroup}>
+      <input
+        {...field}
+        {...props}
+        type={isVisible ? "text" : "password"}
+        className={`${styles.input} ${styles.passwordInput}`}
+      />
+      <button
+        type="button"
+        className={styles.eyeIcon}
+        onClick={toggleVisibility}
+      >
+        {isVisible ? <Eye size={20} /> : <EyeOff size={20} />}
+      </button>
+      {error && <p className={styles.errorMessage}>{error.message}</p>}
+    </div>
+  );
+};
 
 const LoginPopup = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -44,6 +72,7 @@ const LoginPopup = ({ onClose }) => {
       });
     }
   };
+
   useEffect(() => {
     const handleEscKey = (event) => {
       if (event.key === "Escape") {
@@ -52,10 +81,7 @@ const LoginPopup = ({ onClose }) => {
     };
 
     window.addEventListener("keydown", handleEscKey);
-
-    return () => {
-      window.removeEventListener("keydown", handleEscKey);
-    };
+    return () => window.removeEventListener("keydown", handleEscKey);
   }, [onClose]);
 
   const handleBackdropClick = (event) => {
@@ -84,6 +110,7 @@ const LoginPopup = ({ onClose }) => {
               type="email"
               id="email"
               placeholder="Email"
+              className={styles.input}
             />
             {errors.email && (
               <p className={styles.errorMessage}>{errors.email.message}</p>
@@ -91,15 +118,12 @@ const LoginPopup = ({ onClose }) => {
           </div>
           <div className={styles.formGroup}>
             <label htmlFor="password"></label>
-            <input
-              {...register("password")}
-              type="password"
+            <PasswordInput
+              field={register("password")}
               id="password"
               placeholder="Password"
+              error={errors.password}
             />
-            {errors.password && (
-              <p className={styles.errorMessage}>{errors.password.message}</p>
-            )}
           </div>
           <button type="submit" className={styles.submitButton}>
             {isLoading ? "Signing in..." : "Sign In"}
