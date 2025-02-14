@@ -11,6 +11,7 @@ import Loader from "../Loader/Loader";
 import FavoritesPage from "../../pages/FavoritesPage/FavoritesPage";
 import PrivateRoute from "../Routes/PrivateRoute";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div className={styles.app}>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />

@@ -14,6 +14,7 @@ import { fetchTeachers } from "../../redux/teachers/operations";
 import { loadMoreTeachers, setFilters } from "../../redux/teachers/slice";
 import styles from "./TeachersList.module.css";
 import BookTrialPopUp from "../BookTrialPopUp/BookTrialPopUp";
+import toast from "react-hot-toast";
 
 const TeachersList = () => {
   const dispatch = useDispatch();
@@ -45,8 +46,16 @@ const TeachersList = () => {
 
   const handleFavoriteClick = (teacherId) => {
     if (!isAuthenticated) {
-      setShowAuthAlert(true);
-      setTimeout(() => setShowAuthAlert(false), 3000);
+      toast.error("Please log in to add teachers to favorites", {
+        duration: 3000,
+        position: "top-right",
+        style: {
+          background: "#ef4444",
+          color: "#fff",
+          padding: "16px",
+          borderRadius: "8px",
+        },
+      });
       return;
     }
 
@@ -123,11 +132,6 @@ const TeachersList = () => {
           </select>
         </div>
       </div>
-      {showAuthAlert && (
-        <div className={styles.authAlert}>
-          <p>Please log in to add teachers to favorites.</p>
-        </div>
-      )}
 
       <div className={styles.teacherGrid}>
         {teachers.map((teacher) => (
