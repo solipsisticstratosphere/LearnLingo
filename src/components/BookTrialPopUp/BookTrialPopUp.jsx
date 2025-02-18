@@ -4,6 +4,7 @@ import styles from "./BookTrialPopUp.module.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import toast from "react-hot-toast";
 
 const schema = yup.object().shape({
   reason: yup.string().required("Please select your reason for learning"),
@@ -62,10 +63,18 @@ const BookTrialPopUp = ({ isOpen, onClose, teacherName, teacherAvatar }) => {
   if (!isOpen) return null;
 
   const onSubmit = (data) => {
-    console.log("Form submitted:", data);
+    toast.success("Trial lesson booked successfully!", {
+      position: "top-center",
+      duration: 3000,
+      style: {
+        background: "#f4c550",
+        color: "#121417",
+        padding: "16px",
+        borderRadius: "12px",
+      },
+    });
     onClose();
   };
-
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();

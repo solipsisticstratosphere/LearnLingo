@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Heart, ChevronDown, ChevronUp } from "lucide-react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import {
-  selectDisplayedTeachers,
+  selectAllTeachers,
   selectIsLoading,
   selectError,
 } from "../../redux/teachers/selectors";
@@ -12,10 +12,10 @@ import styles from "../TeachersList/TeachersList.module.css";
 import dot from "../../assets/icons/dot.svg";
 import rating from "../../assets/icons/Rating.svg";
 import BookTrialPopUp from "../BookTrialPopUp/BookTrialPopUp";
+
 const Favorites = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const allTeachers = useSelector(selectDisplayedTeachers);
+  const allTeachers = useSelector(selectAllTeachers);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
@@ -36,10 +36,8 @@ const Favorites = () => {
   }, []);
 
   useEffect(() => {
-    if (allTeachers.length === 0) {
-      dispatch(fetchTeachers());
-    }
-  }, [dispatch, allTeachers.length]);
+    dispatch(fetchTeachers());
+  }, [dispatch]);
 
   const handleFavoriteClick = (teacherId) => {
     const newFavorites = favorites.filter((id) => id !== teacherId);
@@ -57,7 +55,6 @@ const Favorites = () => {
   const favoriteTeachers = allTeachers.filter((teacher) =>
     favorites.includes(teacher.firebaseId)
   );
-
   return (
     <div className={styles.container}>
       {favoriteTeachers.length === 0 && !isLoading && (

@@ -63,6 +63,7 @@
 }
 
 .loginButton {
+  color: var(--main);
   gap: 8px;
   display: flex;
   align-items: center;

@@ -132,7 +132,24 @@ const TeachersList = () => {
           </select>
         </div>
       </div>
+      {isLoading && <div className={styles.loadingSpinner}>Loading...</div>}
 
+      {error && (
+        <div className={styles.errorMessage}>
+          Error loading teachers: {error}
+        </div>
+      )}
+
+      {!isLoading && !error && teachers.length === 0 && (
+        <div className={styles.noResults}>
+          <h2 className={styles.noResultsTitle}>
+            No teachers found matching your criteria
+          </h2>
+          <p className={styles.noResultsText}>
+            Try adjusting your filters or search again with different criteria.
+          </p>
+        </div>
+      )}
       <div className={styles.teacherGrid}>
         {teachers.map((teacher) => (
           <div key={teacher.firebaseId} className={styles.card}>
