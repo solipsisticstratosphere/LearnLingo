@@ -99,7 +99,11 @@ const Layout = () => {
           onClick={handleMobileMenuClick}
           aria-label="Toggle menu"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? (
+            <X size={24} color="black" />
+          ) : (
+            <Menu size={24} color="black" />
+          )}
         </button>
 
         {isMobileMenuOpen && (
