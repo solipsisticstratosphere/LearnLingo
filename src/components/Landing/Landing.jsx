@@ -5,6 +5,7 @@ import RegistrationPopup from "../LoginRegisterPopUps/RegistrationPopup";
 import Layout from "../Layout/Layout";
 import face from "../../assets/face.png";
 import iMac from "../../assets/iMac.png";
+import { Link } from "react-router-dom";
 const Landing = () => {
   return (
     <div className={styles.container}>
@@ -23,7 +24,9 @@ const Landing = () => {
             highly qualified and experienced tutors.
           </p>
 
-          <button className={styles.ctaButton}>Get started</button>
+          <Link to="/teachers">
+            <button className={styles.ctaButton}>Get started</button>
+          </Link>
         </div>
 
         <div className={styles.imageSection}>
