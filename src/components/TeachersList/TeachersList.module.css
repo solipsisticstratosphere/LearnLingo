@@ -44,6 +44,7 @@ ul {
 }
 
 .filterSelect {
+  color: var(--main);
   padding: 14px 18px;
   border: 1px solid var(--border-color);
   border-radius: 14px;
@@ -60,13 +61,10 @@ ul {
 }
 
 .filterSelect:hover {
-  border-color: var(--hover-border-color);
 }
 
 .filterSelect:focus {
   outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.1);
 }
 
 @media (max-width: 768px) {
